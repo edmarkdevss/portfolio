@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Edmark — Professional Portfolio</title>
+  <meta name="description" content="Professional portfolio template: hero, about, projects, skills, contact. Single-file HTML/CSS/JS." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #94a3b8;
+      --accent: #7c3aed; /* indigo-violet */
+      --glass: rgba(255,255,255,0.04);
+      --radius: 14px;
+      --maxw: 1100px;
+      --glass-2: rgba(255,255,255,0.02);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#071325 0%, #071227 50%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:40px 20px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--maxw);
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:center;
+      margin-bottom:28px;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:12px
+    }
+    .logo{
+      width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:inline-grid;place-items:center;font-weight:800;color:white;font-size:18px;box-shadow:0 6px 20px rgba(12,18,30,0.6)
+    }
+
+    nav{display:flex;gap:16px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+    nav a:hover{color:#fff;background:var(--glass)}
+
+    .cta{background:linear-gradient(90deg,var(--accent),#06b6d4);padding:10px 14px;border-radius:12px;color:white;font-weight:700;text-decoration:none;box-shadow:0 6px 18px rgba(124,58,237,0.16)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:28px;
+    }
+
+    /* Hero */
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+
+    .hero h1{font-size:28px;margin:0 0 10px}
+    .hero p.lead{color:var(--muted);margin:0 0 18px}
+
+    .hero .roles{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+    .pill{background:var(--glass);padding:8px 12px;border-radius:999px;font-weight:600;color:var(--muted);font-size:13px}
+
+    .actions{display:flex;gap:12px}
+
+    /* Sidebar */
+    .profile-card{
+      border-radius:var(--radius);
+      padding:20px;
+      background:linear-gradient(180deg,var(--card), rgba(0,0,0,0.02));
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      position:sticky;top:40px;height:fit-content
+    }
+    .avatar{width:92px;height:92px;border-radius:14px;background:linear-gradient(180deg,#2b6cb0,#7c3aed);display:inline-grid;place-items:center;font-size:32px;font-weight:700;color:#fff;margin-bottom:12px}
+    .meta{color:var(--muted);font-size:13px}
+
+    /* Sections */
+    section{margin-top:22px}
+    h2.section-title{margin:0 0 12px;font-size:18px}
+
+    /* Projects */
+    .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .card{background:var(--glass-2);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .card .meta{font-size:12px;margin-top:10px}
+
+    /* Skills */
+    .skills{display:flex;flex-wrap:wrap;gap:8px}
+    .skill{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:999px;font-weight:600;color:var(--muted);font-size:13px}
+
+    /* Contact */
+    .contact-form{display:grid;gap:10px}
+    .input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px;color:inherit}
+    textarea{min-height:110px;resize:vertical}
+    .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:white}
+
+    footer{color:var(--muted);margin-top:26px;text-align:center}
+
+    /* Responsiveness */
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr}
+      .projects{grid-template-columns:repeat(1,1fr)}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    a.social{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.02);text-decoration:none;color:var(--muted);font-weight:600}
+
+    /* project modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(1,2,6,0.6);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal{max-width:920px;width:100%;background:linear-gradient(180deg,#07122b,#071227);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+
+    /* subtle animations */
+    .fade-up{transform:translateY(6px);opacity:0;transition:all .45s cubic-bezier(.2,.9,.2,1)}
+    .fade-up.show{transform:none;opacity:1}
+
+      body.light-mode{
+      background: #f5f7fa;
+      color:#0f1724;
+    }
+    body.light-mode .card,
+    body.light-mode .profile-card,
+    body.light-mode .hero{
+      background:white;
+      color:#0f1724;
+      border:1px solid #e2e8f0;
+      box-shadow:0 4px 20px rgba(0,0,0,0.08);
+    }
+    body.light-mode nav a{color:#475569}
+    body.light-mode nav a:hover{background:#e2e8f0;color:#0f1724}
+    body.light-mode .cta{color:white}
+    body.light-mode .muted{color:#64748b}
+    body.light-mode .skill{border-color:#cbd5e1;color:#475569}
+    body.light-mode .pill{background:#e2e8f0;color:#475569}
+    body.light-mode .social{border-color:#cbd5e1;color:#475569}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">ED</div>
+        <div>
+          <div style="font-weight:800">Edmark</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Software Engineer · Frontend &amp; Web3</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact" class="cta">Hire me</a>
+      </nav>
+        <button id="themeToggle" style="background:transparent;border:1px solid rgba(255,255,255,0.2);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer">🌙</button>
+  </header>
+
+    <main class="grid">
+      <div>
+        <article class="hero fade-up show">
+          <h1>Hi — I'm <span style="background:linear-gradient(90deg,var(--accent),#06b6d4);-webkit-background-clip:text;background-clip:text;color:transparent;">Edmark</span>.<br/>I build usable, fast, and delightful web experiences.</h1>
+          <p class="lead">Frontend engineer focused on clean UI, performance, and pragmatic code. I ship production-ready features and love pixel-perfect interfaces.</p>
+
+          <div class="roles">
+            <div class="pill">React</div>
+            <div class="pill">TypeScript</div>
+            <div class="pill">Next.js</div>
+            <div class="pill">Web3</div>
+            <div class="pill">Design Systems</div>
+          </div>
+
+          <div class="actions">
+            <a class="cta" href="#projects">See projects</a>
+            <a class="muted" href="#contact">Let's talk →</a>
+          </div>
+
+          <section id="about">
+            <h2 class="section-title">About</h2>
+            <p class="muted">I create frontends that users notice and engineers love. My work blends accessibility, performance, and maintainability. I enjoy mentoring, open-source contributions, and optimizing build pipelines.</p>
+
+            <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;align-items:center">
+              <div class="card" style="min-width:160px;flex:1">
+                <h3>Experience</h3>
+                <p class="muted">3+ years building web apps for startups and agencies — features, dashboards, and consumer products.</p>
+              </div>
+
+              <div class="card" style="min-width:160px;flex:1">
+                <h3>Availability</h3>
+                <p class="muted">Open to full-time and freelance work. Based in the Philippines — remote OK.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="projects">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects">
+              <div class="card" data-proj="1" tabindex="0">
+                <h3>Design System · Component Library</h3>
+                <p>Systematic UI primitives, tokens, and accessible components used in multiple products.</p>
+                <div class="meta muted">React · Storybook · Typescript</div>
+              </div>
+
+              <div class="card" data-proj="2" tabindex="0">
+                <h3>On-chain Dashboard</h3>
+                <p>Real-time analytics dashboard for monitoring smart-contract metrics and token flows.</p>
+                <div class="meta muted">Next.js · Web3 · GraphQL</div>
+              </div>
+
+              <div class="card" data-proj="3" tabindex="0">
+                <h3>Fintech App</h3>
+                <p>Payments and invoicing app with strong UX and conversion-focused flows.</p>
+                <div class="meta muted">React · Node · Postgres</div>
+              </div>
+
+              <div class="card" data-proj="4" tabindex="0">
+                <h3>Play-to-Earn Game UI</h3>
+                <p>Frontend for mobile-first game with in-game economy and leaderboards.</p>
+                <div class="meta muted">React Native · Firebase</div>
+              </div>
+            </div>
+          </section>
+
+        </article>
+      </div>
+
+      <aside class="profile-card fade-up show">
+        <div class="avatar">ED</div>
+        <div style="font-weight:700">Edmark</div>
+        <div class="meta">Engineer • Frontend & Web3</div>
+
+        <section id="skills">
+          <h2 class="section-title">Skills</h2>
+          <div class="skills">
+            <div class="skill">HTML</div>
+            <div class="skill">CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">React</div>
+            <div class="skill">TypeScript</div>
+            <div class="skill">Node</div>
+            <div class="skill">Design Systems</div>
+          </div>
+        </section>
+
+        <section style="margin-top:12px">
+          <h2 class="section-title">Contact</h2>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <a class="social" href="#contact">✉️ Email</a>
+            <a class="social" href="#projects">💼 LinkedIn</a>
+            <a class="social" href="#projects">🐙 GitHub</a>
+          </div>
+        </section>
+
+        <div style="margin-top:14px;font-size:13px;color:var(--muted)">Timezone: Asia/Manila</div>
+      </aside>
+
+      <!-- modal for project details -->
+      <div id="modal" class="modal-backdrop" role="dialog" aria-hidden="true">
+        <div class="modal" role="document">
+          <button id="closeModal" style="float:right;border:none;background:transparent;color:var(--muted);font-weight:700;cursor:pointer">✕</button>
+          <div id="modalContent">
+            <!-- filled by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- contact section (bottom of the grid column) -->
+      <div style="grid-column:1 / -1;margin-top:12px">
+        <section id="contact" class="card">
+          <h2 class="section-title">Get in touch</h2>
+          <p class="muted">Tell me about your project — I respond within 48 hours.</p>
+
+          <form id="contactForm" class="contact-form" onsubmit="return false;">
+            <input id="name" class="input" placeholder="Your name" required />
+            <input id="email" class="input" placeholder="Your email" type="email" required />
+            <input id="subject" class="input" placeholder="Subject" />
+            <textarea id="message" placeholder="Message" required></textarea>
+            <div style="display:flex;gap:8px">
+              <button type="submit" class="btn btn-primary">Send message</button>
+              <button id="downloadCV" type="button" class="btn">Download CV</button>
+            </div>
+          </form>
+        </section>
+
+        <footer>
+          © <span id="year"></span> Edmark — Built with ❤️ · Single-file portfolio template
+        </footer>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Dark mode toggle
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click',()=>{
+  document.body.classList.toggle('light-mode');
+  themeBtn.textContent = document.body.classList.contains('light-mode') ? '🌞' : '🌙';
+});
+
+// Small interactions: project modal, contact form stub, download CV stub
+    const projects = {
+      1:{title:'Design System · Component Library',desc:'Built a design system with tokens, accessible components, documentation site (Storybook). Reduced UI inconsistencies across multiple products.'},
+      2:{title:'On-chain Dashboard',desc:'Realtime analytics and monitoring dashboard that surfaces smart-contract events and token flows. Implemented robust pagination and performant charts.'},
+      3:{title:'Fintech App',desc:'Payments and invoicing platform focusing on simple flows, security, and fast onboarding.'},
+      4:{title:'Play-to-Earn Game UI',desc:'Mobile-first UI powering leaderboards, wallets, and in-game purchases.'}
+    };
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // project cards -> modal
+    document.querySelectorAll('[data-proj]').forEach(card=>{
+      card.addEventListener('click',()=>openProject(card.dataset.proj));
+      card.addEventListener('keypress',(e)=>{ if(e.key === 'Enter') openProject(card.dataset.proj)});
+    });
+
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModal = document.getElementById('closeModal');
+
+    function openProject(id){
+      const p = projects[id];
+      modalContent.innerHTML = `\n        <h2 style="margin-top:0">${p.title}</h2>\n        <p style="color:var(--muted)">${p.desc}</p>\n        <p style=\"margin-top:12px\"><strong>Tech</strong>: ${document.querySelector('[data-proj="'+id+'"]').querySelector('.meta')?.textContent || '—'}</p>\n        <div style=\"margin-top:14px;display:flex;gap:10px\">\n          <a class=\"btn btn-primary\" href=\"#\">View live</a>\n          <a class=\"btn\" href=\"#\">Source</a>\n        </div>\n      `;
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+    }
+
+    closeModal.addEventListener('click',closeProject);
+    modal.addEventListener('click',(e)=>{ if(e.target === modal) closeProject(); });
+    function closeProject(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+
+    // Contact form handler (stub) — replace with your send method (EmailJS, backend API, etc.)
+    document.getElementById('contactForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if(!name || !email || !msg){ alert('Please fill required fields'); return; }
+      // Simulate success
+      alert('Message sent (demo). Replace this handler with an API call.');
+      this.reset();
+    });
+
+    // Download CV stub
+    document.getElementById('downloadCV').addEventListener('click',()=>{
+      const blob = new Blob([`Curriculum Vitae\n\nName: Edmark\nTitle: Software Engineer\n\n(Replace with your real CV)`],{type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'Edmark-CV.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Smooth scroll for nav
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',function(e){
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth',block:'start'}); }
+      });
+    });
+
+    // small accessibility improvement: focus outlines when using keyboard
+    document.body.addEventListener('keydown',function(e){ if(e.key === 'Tab') document.body.classList.add('kbd'); });
+
+  </script>
+</body>
+</html>
